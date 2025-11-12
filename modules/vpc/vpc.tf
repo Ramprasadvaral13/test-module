@@ -48,7 +48,7 @@ resource "aws_route_table_association" "test_public_rtba" {
     for k,s in var.subnets : k=>s if s.public == true
    }
 
-   route_table_id = aws_route_table.test-public-rtb.id
+   route_table_id = aws_route_table.test_public_rtb.id
    subnet_id = aws_subnet.test_subnet[each.key].id
   
 }
