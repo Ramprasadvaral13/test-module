@@ -9,6 +9,6 @@ output "pubic_subnet_ids" {
 }
 
 output "private_subnet_ids" {
-    value = [ for k,s in aws_subnet.test_subnet : s.id if var.var.subnets[k].public == false ]
+    value = [ for k,s in aws_subnet.test_subnet : s.id if var.subnets[k].public == false ]
   
 }
