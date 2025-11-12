@@ -45,7 +45,7 @@ data "aws_iam_instance_profile" "existing" {
 }
 
 resource "aws_launch_template" "test_lt" {
-    name_prefix = "$(var.name_prefix)-lt"
+    name_prefix = "${var.name_prefix}-lt"
     image_id = data.aws_ssm_parameter.golden_ami.value
     instance_type = var.instance_type
     vpc_security_group_ids = [ aws_security_group.test-sg.id ]
@@ -68,7 +68,7 @@ resource "aws_launch_template" "test_lt" {
 }
 
 resource "aws_autoscaling_group" "test_asg" {
-    name = "$(var.name_prefix)-asg"
+    name = "${var.name_prefix}-asg"
     min_size = var.min_size
     max_size = var.max_size
     desired_capacity = var.desired_capacity

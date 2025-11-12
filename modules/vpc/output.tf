@@ -4,11 +4,11 @@ output "vpc_id" {
 }
 
 output "pubic_subnet_ids" {
-    value = [ for k,s in aws_subnet.test_subnet : s.id if var.subnet[k].public == true ]
+    value = [ for k,s in aws_subnet.test_subnet : s.id if var.subnets[k].public == true ]
   
 }
 
 output "private_subnet_ids" {
-    value = [ for k,s in aws_subnet.test_subnet : s.id if var.var.subnet[k].public == false ]
+    value = [ for k,s in aws_subnet.test_subnet : s.id if var.var.subnets[k].public == false ]
   
 }

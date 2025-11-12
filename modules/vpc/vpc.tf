@@ -12,7 +12,7 @@ resource "aws_internet_gateway" "test_igw" {
 
 resource "aws_subnet" "test_subnet" {
     vpc_id = aws_vpc.test-vpc.id
-    for_each = var.subnet
+    for_each = var.subnets
     cidr_block = each.value.cidr
     availability_zone = each.value.az
     map_public_ip_on_launch = each.value.public
@@ -28,7 +28,7 @@ resource "aws_nat_gateway" "test_nat" {
     allocation_id = aws_eip.test_eip.id
     subnet_id = aws_subnet.test-subnet[
         keys({
-            for k,s in var.subnet : k=>s if s.public == true
+            for k,s in var.subnets : k=>s if s.public == true
         })[0]
         ].id
   
@@ -45,7 +45,7 @@ resource "aws_route_table" "test_public_rtb" {
 
 resource "aws_route_table_association" "test_public_rtba" {
    for_each = {
-    for k,s in var.subnet : k=>s if s.public == true
+    for k,s in var.subnets : k=>s if s.public == true
    }
 
    route_table_id = aws_route_table.test-public-rtb.id
@@ -64,7 +64,7 @@ resource "aws_route_table" "test_private_rtb" {
 
 resource "aws_route_table_association" "test_private_rtba" {
     for_each = {
-      for k,s in var.subnet : k=>s if s.public == false 
+      for k,s in var.subnets : k=>s if s.public == false 
     }
     route_table_id = aws_route_table.test_private_rtb.id
     subnet_id = aws_subnet.test-subnet[each.key].id
